@@ -1,6 +1,6 @@
 # 36kr NewsFlash Reader
 
-### CN
+## CN
 
 前两天偶然发现了 http://new.36kr.com/newsflashes 这个网站，上面会即时更新一些科技时讯，于是就萌生了做个小爬虫来抓取上面新闻的想法(其实应该算是spider，当时还不清除spider 和 crawler 的区别0.0).
 
