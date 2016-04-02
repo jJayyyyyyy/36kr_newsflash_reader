@@ -26,9 +26,9 @@
 
 	然后，最大的困难出现了。。。使用Get+bs4的方法总是出现Error：能把html保存，但无法用bs4解析。由于保存下来的html很奇怪，接合Chrome解析调试的时候突然想到，这里面有很多js，这尼玛该不会是动态和静态的区别吧！？Google一下 爬虫 python 动态，果然。。掉坑里了，公开课里面的方法只适用于静态网页。(`test_3.py`是含有bug的代码)
 
-	更多说明请参见文末的[Reference]。
+	更多说明请参见文末的**[Reference]**。
 
-4. 再次感谢Google，根据 [这里](http://www.ahlinux.com/python/15816.html) ， [这里](https://www.zhihu.com/question/21471960/answer/81061538) 和 [这里](http://xlzd.me/2015/12/19/python-crawler-04) , 总结的到了大致思路。为了节省资源，不使用模拟浏览器环境的方法(搭建js的运行环境，浏览器引擎)，而是用`Chrome的开发者工具`来检测分析`网络请求`。
+4. 再次感谢Google，根据 [这里](http://www.ahlinux.com/python/15816.html)， [这里](https://www.zhihu.com/question/21471960/answer/81061538) 和 [这里](http://xlzd.me/2015/12/19/python-crawler-04), 总结得到了大致思路。为了节省资源，不使用模拟浏览器环境的方法(搭建js的运行环境，浏览器引擎)，而是用`Chrome的开发者工具`来检测分析`网络请求`。
 
 	在开发者工具中，点开`Network`，仔细查找后发现在`Name`是`newsflashes.json`的那一项，点开它的`Preview`，确实能看到当前页面的那些`hash_title`和`description_text`。
 
@@ -40,9 +40,9 @@
 
 	这时我又注意到了在Request Headers下面有`User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36`，和之前伪装成移动端访问的包头不太一样，所以我决定也把这段也更新一下。
 
-6. 思路清楚了，下面就是如何用python实现了，代码参见`test_4.py`。由于我想要做的是专用脚本，针对单一网页的spider，功能单一目标明确，所以可以尽可能简单。
+5. 思路清楚了，下面就是如何用python实现了，代码参见`test_4.py`。由于我想要做的是专用脚本，针对单一网页的spider，功能单一目标明确，所以可以尽可能简单。
 
-	把刚才得到的新的URL和Header放到request对象里面，然后使用request.urlopen()方法，直接就返回JSON格式的数据了，比想象的还要简单。
+	把刚才得到的新的URL和Header放到request对象里面，然后使用`request.urlopen()`方法，直接就返回JSON格式的数据了，比想象的还要简单。
 
 	好了，真正的信息源已经被挖出，接下来是怎么处理并提取需要的信息了(我只需要title，不需要简述以及其他附加信息)。
 
@@ -54,7 +54,11 @@
 
 * PS: 每页只有30条新闻，如果要翻看下一页，则需要再次inspect网页，分析得到请求资源的地址是如下的结构(代码请参见`test_5_two_pages.py`)：
 
+	```python
+
 	'http://new.36kr.com/newsflashes.json?b_id=' + str(news_id) + '&d=next'
+
+	```
 
 	不过最终版本还是舍弃了这一功能，因为如果要看更多内容/标题，直接上浏览器就得了，太多的东西在Terminal里面会影响阅读体验，过犹不及。
 
@@ -62,17 +66,27 @@
 
 ## Refernce
 
-[ref: ](http://www.ahlinux.com/python/15816.html)
-	
-	> 用Python实现常规的静态网页抓取时，往往是用urllib2来获取整个HTML页面，然后从HTML文件中逐字查找对应的关键字。但是，在动态页面中，所显示的内容往往不是通过HTML页面呈现的，而是通过调用js等方式从数据库中得到数据，回显到网页上。如果按照之前的办法： up=urllib2.urlopen(url) + cont=up.read() 就抓取不到上述内容了。由源码可以看出，HTML提供文字模板，js根据不同的id提供不同的变量，“填入”到文字模板中，形成了一个具体的网页。所以单纯抓取此HTML，只能得到一些文字模板，而无法得到具体内容。
+[imooc: ](http://www.imooc.com/learn/563)
 
-	[ref: ](http://chenqx.github.io/2014/12/23/Spider-Advanced-for-Dynamic-Website-Crawling/)
+[BeautifulSoup: ](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 
-	> 文中介绍静态bbs网页的抓取。但是，互联网大部分的web页面都是动态的，经常逛的网站例如京东、淘宝等，商品列表都是js，并有Ajax渲染，这样就获取不到网页内容（获取到后台数据后再组合成html展示出来的）。单纯获取页面而没有执行到js的话是无法看到商品数据列表信息的。
+[Spider与crawler不同点: ](http://www.admin5.com/article/20080825/100523.shtml)
 
-	[ref: ](https://www.zhihu.com/question/21471960/answer/81061538)
+[分析动态网页_1: ](http://www.ahlinux.com/python/15816.html)
 
-	> 然后，打开北邮人论坛的首页，发现它的首页HTML源码中确实没有页面所显示文章的内容，那么，很可能这是通过JS异步加载到页面的。请记住，对于一些前端渲染的网页，虽然在HTML源码中看不到我们需要的数据，但是更大的可能是它会通过另一个请求拿到纯数据（很大可能以JSON格式存在），我们不但不需要模拟浏览器，反而可以省去解析HTML的消耗。
+> 用Python实现常规的静态网页抓取时，往往是用urllib2来获取整个HTML页面，然后从HTML文件中逐字查找对应的关键字。但是，在动态页面中，所显示的内容往往不是通过HTML页面呈现的，而是通过调用js等方式从数据库中得到数据，回显到网页上。如果按照之前的办法： up=urllib2.urlopen(url) + cont=up.read() 就抓取不到上述内容了。由源码可以看出，HTML提供文字模板，js根据不同的id提供不同的变量，“填入”到文字模板中，形成了一个具体的网页。所以单纯抓取此HTML，只能得到一些文字模板，而无法得到具体内容。
 
+[分析动态网页_2: ](http://chenqx.github.io/2014/12/23/Spider-Advanced-for-Dynamic-Website-Crawling/)
 
+> 文中介绍静态bbs网页的抓取。但是，互联网大部分的web页面都是动态的，经常逛的网站例如京东、淘宝等，商品列表都是js，并有Ajax渲染，这样就获取不到网页内容（获取到后台数据后再组合成html展示出来的）。单纯获取页面而没有执行到js的话是无法看到商品数据列表信息的。
+
+[分析动态网页_3: ](https://www.zhihu.com/question/21471960/answer/81061538)
+
+> 然后，打开北邮人论坛的首页，发现它的首页HTML源码中确实没有页面所显示文章的内容，那么，很可能这是通过JS异步加载到页面的。请记住，对于一些前端渲染的网页，虽然在HTML源码中看不到我们需要的数据，但是更大的可能是它会通过另一个请求拿到纯数据（很大可能以JSON格式存在），我们不但不需要模拟浏览器，反而可以省去解析HTML的消耗。
+
+[Web crawler with Python - 04.另一种抓取方式: ](http://xlzd.me/2015/12/19/python-crawler-04)
+
+[读写JSON数据: ](http://python3-cookbook.readthedocs.org/zh_CN/latest/c06/p02_read-write_json_data.html)
+
+[详解抓取网站，模拟登陆，抓取动态网页的原理和实现: ](http://www.crifan.com/files/doc/docbook/web_scrape_emulate_login/release/html/web_scrape_emulate_login.html)
 
