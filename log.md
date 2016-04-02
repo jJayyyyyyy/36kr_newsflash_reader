@@ -62,31 +62,29 @@
 
 	不过最终版本还是舍弃了这一功能，因为如果要看更多内容/标题，直接上浏览器就得了，太多的东西在Terminal里面会影响阅读体验，过犹不及。
 
-<br/>
-
 ## Refernce
 
-[imooc: ](http://www.imooc.com/learn/563)
+[imooc ](http://www.imooc.com/learn/563)
 
-[BeautifulSoup: ](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+[BeautifulSoup ](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 
-[Spider与crawler不同点: ](http://www.admin5.com/article/20080825/100523.shtml)
+[Spider与crawler不同点 ](http://www.admin5.com/article/20080825/100523.shtml)
 
-[分析动态网页_1: ](http://www.ahlinux.com/python/15816.html)
+[分析动态网页_1 ](http://www.ahlinux.com/python/15816.html)
 
 > 用Python实现常规的静态网页抓取时，往往是用urllib2来获取整个HTML页面，然后从HTML文件中逐字查找对应的关键字。但是，在动态页面中，所显示的内容往往不是通过HTML页面呈现的，而是通过调用js等方式从数据库中得到数据，回显到网页上。如果按照之前的办法： up=urllib2.urlopen(url) + cont=up.read() 就抓取不到上述内容了。由源码可以看出，HTML提供文字模板，js根据不同的id提供不同的变量，“填入”到文字模板中，形成了一个具体的网页。所以单纯抓取此HTML，只能得到一些文字模板，而无法得到具体内容。
 
-[分析动态网页_2: ](http://chenqx.github.io/2014/12/23/Spider-Advanced-for-Dynamic-Website-Crawling/)
+[分析动态网页_2 ](http://chenqx.github.io/2014/12/23/Spider-Advanced-for-Dynamic-Website-Crawling/)
 
 > 文中介绍静态bbs网页的抓取。但是，互联网大部分的web页面都是动态的，经常逛的网站例如京东、淘宝等，商品列表都是js，并有Ajax渲染，这样就获取不到网页内容（获取到后台数据后再组合成html展示出来的）。单纯获取页面而没有执行到js的话是无法看到商品数据列表信息的。
 
-[分析动态网页_3: ](https://www.zhihu.com/question/21471960/answer/81061538)
+[分析动态网页_3 ](https://www.zhihu.com/question/21471960/answer/81061538)
 
 > 然后，打开北邮人论坛的首页，发现它的首页HTML源码中确实没有页面所显示文章的内容，那么，很可能这是通过JS异步加载到页面的。请记住，对于一些前端渲染的网页，虽然在HTML源码中看不到我们需要的数据，但是更大的可能是它会通过另一个请求拿到纯数据（很大可能以JSON格式存在），我们不但不需要模拟浏览器，反而可以省去解析HTML的消耗。
 
-[Web crawler with Python - 04.另一种抓取方式: ](http://xlzd.me/2015/12/19/python-crawler-04)
+[Web crawler with Python - 04.另一种抓取方式 ](http://xlzd.me/2015/12/19/python-crawler-04)
 
-[读写JSON数据: ](http://python3-cookbook.readthedocs.org/zh_CN/latest/c06/p02_read-write_json_data.html)
+[读写JSON数据 ](http://python3-cookbook.readthedocs.org/zh_CN/latest/c06/p02_read-write_json_data.html)
 
-[详解抓取网站，模拟登陆，抓取动态网页的原理和实现: ](http://www.crifan.com/files/doc/docbook/web_scrape_emulate_login/release/html/web_scrape_emulate_login.html)
+[详解抓取网站，模拟登陆，抓取动态网页的原理和实现 ](http://www.crifan.com/files/doc/docbook/web_scrape_emulate_login/release/html/web_scrape_emulate_login.html)
 
