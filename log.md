@@ -28,7 +28,7 @@
 
 	视频当中使用的是[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)(一开始安装有问题，在Google和Stack Overflow的帮助下安装成功)。根据其[Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)，完成初步学习，参见`test_bs4.py`和`test_bs4.html`
 
-	然后，最大的困难出现了。。。使用Get+bs4的方法总是出现Error：能把html保存，但无法用bs4解析。由于保存下来的html很奇怪，接合Chrome解析调试的时候突然想到，这里面有很多js，这尼玛该不会是动态和静态的区别吧！？Google一下 爬虫 python 动态，果然。。掉坑里了，公开课里面的方法只适用于静态网页。
+	然后，最大的困难出现了。。。使用Get+bs4的方法总是出现Error：能把html保存，但无法用bs4解析。由于保存下来的html很奇怪，接合Chrome解析调试的时候突然想到，这里面有很多js，这尼玛该不会是动态和静态的区别吧！？Google一下 爬虫 python 动态，果然。。掉坑里了，公开课里面的方法只适用于静态网页。(`test_3.py`是含有bug的代码)
 
 	更多解释请参见文末参考[参考]。
 
@@ -70,13 +70,16 @@
 
 <br/>
 
-6. 思路清楚了，下面就是如何用python实现了。由于我想要做的是专用脚本，针对单一网页的spider，所以可以尽可能简单。
+6. 思路清楚了，下面就是如何用python实现了。由于我想要做的是专用脚本，针对单一网页的spider，功能单一目标明确，所以可以尽可能简单。
 
+	把刚才得到的新的URL和Header放到request对象里面，然后使用request.urlopen()方法，直接就返回JSON格式的数据了，比想象的还要简单。
 
+	好了，真正的信息源已经被挖出，接下来是怎么处理并提取需要的信息了(我只需要title，不需要简述以及其他附加信息)。
 
+	读写JSON数据可以参考官方文档，也可以参考[这里](http://python3-cookbook.readthedocs.org/zh_CN/latest/c06/p02_read-write_json_data.html).
 
+	代码参见`test_4.py`，首先需要引入一些包和模块。接着，我把返回的数据存储成了`test_4.json`文件，然后用json.loads()方法把这个文件读取到json_data这个对象里面，并添加参数使其规格化，可读性更好。这里其实是把这个json文件解码成了一个dict，而这个dict里面又可以分解成更多dict和list。观察后，根据key得到value，根据index来索引list，即可提取最终需要的信息。
 
-
-
+7. 把上面的`test_4.py`简化一下，就得到了最终的`36kr_newsflash_reader.py`
 
 
