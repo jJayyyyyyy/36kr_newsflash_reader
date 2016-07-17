@@ -15,6 +15,6 @@ with request.urlopen(req) as f:
         print('Status Error!\n')
 
 for i in range(10):
-    print(json_data["data"]['newsflashes'][i]['hash_title']+'\n')
+    print(json_data["props"]["newsflashList|newsflash"][i]['title']+'\n')
 
 print('done!\n')
