@@ -12,7 +12,7 @@ def get_news(url=first_page):
 		print('Status:', f.status, f.reason + '\n')
 		if(200 == f.status):
 			data = f.read()
-			json_data = json.loads(data.decode('utf-8'))
+			json_data = json.loads(data.decode('utf-8', 'ignore'))
 			return json_data
 		else:
 			print('Status Error\n')
