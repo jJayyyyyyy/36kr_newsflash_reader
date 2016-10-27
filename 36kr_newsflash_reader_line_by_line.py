@@ -21,17 +21,18 @@ def get_news(url=first_page):
 def print_news(json_data):
 	while True:
 		for i in json_data['data']['items']:
-			s = input('')
+			s = input('\n' + i['title'])
 			if s == 'q':
 				print('\nDone\n')
-				return 'Done'
-			elif s == 't':
-				print('\n' + i['updated_at'])
-			print(i['title'])
+				return 1
+			elif s == 'd':
+				print(i['updated_at'] + '\n' + i['description'] + '\n\n\n')
 			news_id = i['id']
+
 		print('\n--------- Next Page ---------')
 		new_page_url = first_page + '?b_id=' + str(news_id) + '&d=mext'
 		json_data = get_news(new_page_url)
+
 
 json_data = get_news()
 print_news(json_data)
