@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from urllib import request
+from urllib import request, error
 import json
 
 first_page_url = 'http://36kr.com/api/newsflash'
@@ -34,6 +34,13 @@ def get_news(json_data):
 		new_page_url = first_page_url + '?b_id=' + str(news_id) + '&d=mext'
 		json_data = get_json_data(new_page_url)
 
-
-get_news(get_json_data())
-
+try:
+	get_news(get_json_data())
+except error.HTTPError as e:
+	# in case of 404
+	print(e)
+except ValueError as e:
+	# e.g. url is 'http://36kr.com/api/news'
+	# it still returns status code 200
+	# but the returned content is a 404-like page
+	print('ValueError!\n')
